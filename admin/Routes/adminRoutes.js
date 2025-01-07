@@ -1,10 +1,6 @@
 const express = require("express");
-const {
-  adminSignup,
-  adminLogin,
-  addStation,
-  updateFare,
-} = require("../Contollers/adminContoller");
+const { adminSignup, adminLogin } = require("../Contollers/adminContoller");
+const { addStation, updateFare } = require("../Contollers/addStationContoller");
 const router = express.Router();
 
 router.post("/signup", adminSignup);

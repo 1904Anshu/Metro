@@ -1,8 +1,6 @@
-const Station = require("../../models/station");
 const Admin = require("../../models/Admin");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-
 // Admin Signup
 const adminSignup = async (req, res) => {
   try {
@@ -39,32 +37,7 @@ const adminLogin = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
-// Add New Station
-const addStation = async (req, res) => {
-  try {
-    const { from, to, distance } = req.body;
-    const fare = distance * 6; // Fare calculation logic
-    const station = await Station.create({ from, to, distance, fare });
-    res.status(201).json(station);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+module.exports = {
+  adminSignup,
+  adminLogin,
 };
-
-// Universal Fare Update
-const updateFare = async (req, res) => {
-  try {
-    const { ratePerKm } = req.body;
-    const stations = await Station.find();
-    for (const station of stations) {
-      station.fare = station.distance * ratePerKm;
-      await station.save();
-    }
-    res.status(200).json({ message: "Fares updated successfully" });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-module.exports = { adminSignup, adminLogin, addStation, updateFare };
